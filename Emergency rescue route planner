@@ -1,0 +1,57 @@
+from collections import deque
+
+--------------------------------------------------
+Graph
+--------------------------------------------------
+
+graph = {
+"A": ["B", "C"],
+"B": ["D", "E"],
+"C": ["F", "G"],
+"D": ["H"],
+"E": ["H"],
+"F": ["I"],
+"G": ["J"],
+"H": ["K"],
+"I": ["K"],
+"J": ["K"],
+"K": ["L"],
+"L": []
+}
+
+--------------------------------------------------
+Breadth First Search (BFS)
+--------------------------------------------------
+
+def bfs(graph, start, goal):
+queue = deque([(start, [start])])
+visited = set()
+
+while queue:
+    current, path = queue.popleft()
+
+    if current == goal:
+        return path
+
+    if current not in visited:
+        visited.add(current)
+
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                queue.append((neighbor, path + [neighbor]))
+
+return None
+
+--------------------------------------------------
+Main Program
+--------------------------------------------------
+
+start = "A"
+goal = "L"
+
+path = bfs(graph, start, goal)
+
+if path:
+print("BFS Path:", " -> ".join(path))
+else:
+print("No path found.")
